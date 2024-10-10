@@ -5,9 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Debugger</title>
     <link rel="stylesheet" href="./css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/ace-builds@1.36.2/css/ace.min.css" rel="stylesheet">
+
+
 </head>
 <body>
-    <h1>Debugger</h1>
+    <aside>
+        <h1 class="titulo">Debugger</h1>
+        <main class="datos">
+            <section class="registros" id="registros"></section>
+            <div class="derecha">
+                <section class="estados" id="estados"></section>
+                <section class="memoria" id="memoria"></section>
+            </div>
+        <main/>
+    </aside>
+    <main class="codigo" id="editor">
+
+    </main>
     <script type="module" src="./scripts/main.ts"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.36.2/src-noconflict/ace.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.36.2/src-noconflict/mode-plain_text.min.js"></script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/javascript");
+    </script>
+
 </body>
 </html>
