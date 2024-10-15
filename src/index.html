@@ -11,16 +11,16 @@
 </head>
 <body>
     <aside>
-        <h1 class="titulo">Debugger</h1>
-        <main class="datos">
-            <section class="registros" id="registros"></section>
-            <div class="derecha">
-                <section class="estados" id="estados"></section>
-                <section class="memoria" id="memoria"></section>
+        <h1 class="title">Debugger</h1>
+        <main class="data">
+            <section class="registers" id="registers"></section>
+            <div class="right">
+                <section class="states" id="states"></section>
+                <section class="memory" id="memory"></section>
             </div>
         <main/>
     </aside>
-    <main class="codigo" id="editor">
+    <main class="code" id="editor">
 
     </main>
     <script type="module" src="./scripts/main.ts"></script>
@@ -30,6 +30,8 @@
     <script>
         var editor = ace.edit("editor");
         editor.setTheme("ace/theme/monokai");
+
+        // TODO: change mode to custom ASM
         editor.session.setMode("ace/mode/javascript");
     </script>
 
