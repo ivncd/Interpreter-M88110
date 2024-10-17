@@ -1,8 +1,8 @@
-import aceBuilds from 'https://cdn.jsdelivr.net/npm/ace-builds@1.36.2/+esm'
+import aceBuilds from 'ace-builds/src-min-noconflict/ace';
 
-import Compiler from './models/Compiler';
+import Compiler from './core/Compiler';
 import Instruction from './models/Instruction';
-import Interpreter from './models/Interpreter';
+import Interpreter from './core/Interpreter';
 
 
 /* Setting up code editor */
