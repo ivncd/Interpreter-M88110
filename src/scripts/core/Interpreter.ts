@@ -1,4 +1,4 @@
-import Instruction from "./Instruction";
+import Instruction from "../models/Instruction";
 
 export default class Interpreter{
     instructions : Instruction[];

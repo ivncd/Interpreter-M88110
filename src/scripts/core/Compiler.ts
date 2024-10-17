@@ -1,4 +1,4 @@
-import Instruction from './Instruction.ts';
+import Instruction from '../models/Instruction';
 
 export default class Compiler{
     lines : string[];

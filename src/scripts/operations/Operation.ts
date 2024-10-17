@@ -1,4 +1,4 @@
-import Operand from "./Operand";
+import Operand from "../models/Operand";
 
 export default abstract class Operation {
     protected operationType : string;

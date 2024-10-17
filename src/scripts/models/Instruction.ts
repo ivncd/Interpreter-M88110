@@ -1,4 +1,4 @@
-import Operation from "./Operation";
+import Operation from "../operations/Operation";
 import Operand from "./Operand";
 
 export default class Instruction{
