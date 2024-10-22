@@ -1,5 +1,5 @@
 import Operation from "../Operation";
-import Operand from "../../models/Operand";
+import { Operand } from "../../models/Operand";
 
 class Add implements Operation{
     static EXTENSIONS : { [extension : string] : (context : Add) => number} =  {

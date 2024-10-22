@@ -1,5 +1,5 @@
 import Operation from "../operations/Operation";
-import Operand from "./Operand";
+import { Operand } from "./Operand";
 
 export default class Instruction{
     operation : Operation;
@@ -11,10 +11,12 @@ export default class Instruction{
     }
 
     //TODO: make the operation and operands parser
-    private obtainOperation(instructionText : string) : Operation | null{
+    private obtainOperation(instructionText : string) : Operation {
+
     }
 
-    private obtainOperands(instructionText : string) : Operand[] | null{
+    private obtainOperands(instructionText : string) : Operand[]{
+
     }
 
 
