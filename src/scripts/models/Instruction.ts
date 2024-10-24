@@ -1,22 +1,28 @@
 import Operation from "../operations/Operation";
 import { Operand } from "./Operand";
 
+import Parser from "../core/Parser";
+
 export default class Instruction{
-    operation : Operation;
+    label : string | undefined;
+    operation : ;
     operands : Operand[];
+    comment : string | undefined;
 
     constructor(instructionText : string){
-        this.operation = this.obtainOperation(instructionText);
-        this.operands = this.obtainOperands(instructionText);
+        const parsedInstruction = Parser.parseInstruction(instructionText)!;
+        this.label = parsedInstruction.label;
+        this.operation = parsedInstruction.operation;
+        this.operands = this.obtainOperands(parsedInstruction.operands);
+        this.comment = parsedInstruction.comment;
     }
 
-    //TODO: make the operation and operands parser
-    private obtainOperation(instructionText : string) : Operation {
+    private obtainOperation(operationText : string) : Operation {
 
     }
 
-    private obtainOperands(instructionText : string) : Operand[]{
-
+    private obtainOperands(operandsText : string) : Operand[]{
+        return Parser.parseOperands(operandsText);
     }
 
 
