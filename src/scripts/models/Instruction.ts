@@ -5,28 +5,27 @@ import Parser from "../core/Parser";
 
 export default class Instruction{
     label : string | undefined;
-    operation : ;
+    operation : Operation;
     operands : Operand[];
     comment : string | undefined;
 
     constructor(instructionText : string){
         const parsedInstruction = Parser.parseInstruction(instructionText)!;
         this.label = parsedInstruction.label;
-        this.operation = parsedInstruction.operation;
         this.operands = this.obtainOperands(parsedInstruction.operands);
+        this.operation = this.obtainOperation(parsedInstruction.operation);
         this.comment = parsedInstruction.comment;
-    }
-
-    private obtainOperation(operationText : string) : Operation {
-
     }
 
     private obtainOperands(operandsText : string) : Operand[]{
         return Parser.parseOperands(operandsText);
     }
 
+    private obtainOperation(operationText : string) : Operation {
+        return Parser.parseOperation(operationText, this.operands);
+    }
 
     public execute() : void{
-
+        this.operation.execute(this.operands);
     }
 }
