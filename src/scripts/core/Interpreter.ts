@@ -23,6 +23,6 @@ export default class Interpreter{
     }
 
     public executeLine(lineNumber : number) : void{
-        this.instructions[lineNumber].execute();
+        this.instructions[lineNumber - 1].execute();
     }
 }
