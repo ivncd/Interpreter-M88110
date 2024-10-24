@@ -1,17 +1,17 @@
 import Operation from "../Operation";
 import { Operand } from "../../models/Operand";
 
-class Add implements Operation{
+export default class Add implements Operation{
     static EXTENSIONS : { [extension : string] : (context : Add) => number} =  {
         "" : (context) => context.signed(),
         "u" : (context) => context.unsigned()
     };
 
     extension : string;
-    operands : Operand[];
-    constructor(extension : string, operands : Operand[]){
+    operands !: Operand[];
+
+    constructor(extension : string) {
         this.extension = extension;
-        this.operands = operands;
     }
 
     // TODO: Make these operations
@@ -27,8 +27,9 @@ class Add implements Operation{
         return value
     }
 
-    public execute() : void{
+    public execute(operands : Operand[]) : void{
+        this.operands = operands;
         const func = Add.EXTENSIONS[this.extension];
-        this.operands[0].set(func(this));
+        operands[0].set(func(this));
     }
 }
