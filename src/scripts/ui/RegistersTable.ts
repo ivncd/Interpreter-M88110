@@ -21,7 +21,7 @@ export default class RegistersTable {
             cell.appendChild(valueCell);
 
             table.appendChild(cell);
-            RegistersTable.registersToElement.set(registerId, registerCell);
+            RegistersTable.registersToElement.set(registerId, valueCell);
         }) 
 
         RegistersTable.table = table
