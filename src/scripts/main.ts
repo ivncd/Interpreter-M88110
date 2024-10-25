@@ -6,10 +6,11 @@ import Interpreter from './core/Interpreter';
 import Registers from './core/Registers';
 import RegistersTable from './ui/RegistersTable';
 
-const editor = aceBuilds.edit("editor");
-editor.setTheme("ace/theme/monokai");
-editor.session.setMode("ace/mode/javascript");
 
+aceBuilds.config.set('basePath', '/ace');
+const editor = aceBuilds.edit("editor");
+editor.setTheme("ace/theme/twilight");
+editor.setValue("");
 
 function setupRegisters(div : HTMLElement) : void{
     RegistersTable.build();
@@ -25,14 +26,13 @@ Registers.set("r1", 1)
 Registers.set("r2", 2)
 Registers.set("r3", 3)
 
-let code = `
-add r1, r2, r3
-add r4, r2, r3
-`
+function main(){
+    let code = editor.getValue();
 
-const compiler = new Compiler(code);
-const interpreter = new Interpreter(compiler.getInstructions());
-interpreter.executeAll()
+    const compiler = new Compiler(code);
+    const interpreter = new Interpreter(compiler.getInstructions());
+    interpreter.executeAll()
+}
 
-//const buttonExecuteAll = document.getElementById("executeAll");
-//buttonExecuteAll!.addEventListener("click", main);
+const buttonExecuteAll = document.getElementById("executeAll");
+buttonExecuteAll!.addEventListener("click", main);
