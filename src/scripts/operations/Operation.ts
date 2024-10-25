@@ -1,4 +1,4 @@
-import Operand from "../models/Operand";
+import { Operand } from "../models/Operand";
 
 export default interface Operation{
     extension : string;

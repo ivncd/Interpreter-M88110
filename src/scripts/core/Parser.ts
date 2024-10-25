@@ -1,4 +1,4 @@
-import { Operand, Register, Value } from "../models/Operand";
+import { Operand, Register } from "../models/Operand";
 
 import Operation from "../operations/Operation";
 import Add from "../operations/airthmetic/add";

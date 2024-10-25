@@ -22,7 +22,7 @@ export default class Instruction{
     }
 
     private obtainOperation(operationText : string) : Operation {
-        return Parser.parseOperation(operationText, this.operands);
+        return Parser.parseOperation(operationText);
     }
 
     public execute() : void{
