@@ -8,7 +8,8 @@ const TEXT_TO_OPERATIONS: Map<string, (extension: string) => Operation> = new Ma
     ["addu", (extension) => new Add(extension)]
 ]);
 
-const asmRegex = /^(?:(?<label>[A-Za-z][A-Za-z0-9]*):)?\s*(?<operation>[A-Za-z.]+)\s*(?<operands>[A-Za-z0-9, ]*)?\s*(?:;(?<comment>.*))?$/;
+
+const asmRegex = /^(?:(?<label>[A-Za-z][A-Za-z0-9]*):)?\s*(?<operation>[A-Za-z.]+)\s*(?<operands>[A-Za-z0-9, -]*)?\s*(?:;(?<comment>.*))?$/;
 const registerRegex = /r([0-9]|[12][0-9]|3[01])/;
 
 // Immediate values
