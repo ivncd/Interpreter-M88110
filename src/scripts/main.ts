@@ -26,6 +26,8 @@ Registers.set("r1", 1)
 Registers.set("r2", 2)
 Registers.set("r3", 3)
 
+editor.setValue("add r5, r2, r3\nadd r6, r5, r1");
+
 function main(){
     let code = editor.getValue();
 
