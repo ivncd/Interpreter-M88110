@@ -13,6 +13,13 @@ export default class Add implements Operation{
         this.extension = extension;
     }
 
+    private checkOperands(operands : Operand[]) : boolean{
+        if(operands)
+            return true;
+        else
+            return false;
+    }
+
     public signed() : number {
         let value = this.operands[1].get() + this.operands[2].get();
 
@@ -20,8 +27,10 @@ export default class Add implements Operation{
     }
 
     public execute(operands : Operand[]) : void{
-        this.operands = operands;
-        const func = Add.EXTENSIONS[this.extension];
-        operands[0].set(func(this));
+        if(this.checkOperands(operands)){
+            this.operands = operands;
+            const func = Add.EXTENSIONS[this.extension];
+            operands[0].set(func(this));
+        }
     }
 }

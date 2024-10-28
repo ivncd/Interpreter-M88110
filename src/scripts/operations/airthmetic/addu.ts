@@ -14,7 +14,10 @@ export default class Add implements Operation{
     }
 
     private checkOperands(operands : Operand[]) : boolean{
-        return true;
+        if(operands)
+            return true;
+        else
+            return false;
     }
 
     public unsigned() : number {
