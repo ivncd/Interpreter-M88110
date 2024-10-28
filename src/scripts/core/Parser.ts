@@ -1,4 +1,4 @@
-import { Operand, Register } from "../models/Operand";
+import { Operand, Register, DecimalValue, HexadecimalValue} from "../models/Operand";
 
 import Operation from "../operations/Operation";
 import Add from "../operations/airthmetic/add";
@@ -10,6 +10,10 @@ const TEXT_TO_OPERATIONS: Map<string, (extension: string) => Operation> = new Ma
 
 const asmRegex = /^(?:(?<label>[A-Za-z][A-Za-z0-9]*):)?\s*(?<operation>[A-Za-z.]+)\s*(?<operands>[A-Za-z0-9, ]*)?\s*(?:;(?<comment>.*))?$/;
 const registerRegex = /r([0-9]|[12][0-9]|3[01])/;
+
+// Immediate values
+const decimalRegex = /^-?\d{1,5}$/;
+const hexadecimalRegex = /^0[xX][0-9a-fA-F]{1,4}$/;
 
 export default class Parser{
     public static parseInstruction(instructionText : string){
@@ -30,8 +34,12 @@ export default class Parser{
             operand = operand.trim();
             if(operand.match(registerRegex)){
                 operands.push(new Register(operand));
+            } else if(operand.match(decimalRegex)) {
+                operands.push(new DecimalValue(parseInt(operand)));
+            } else if(operand.match(hexadecimalRegex)) {
+                operands.push(new HexadecimalValue(operand))
             } else {
-                throw new Error(`Cant find operand type for ${operand}`)
+                throw new Error(`Cant find operand type for ${operand}`);
             }
         }
 
