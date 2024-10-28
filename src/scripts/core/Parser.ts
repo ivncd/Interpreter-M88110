@@ -5,6 +5,7 @@ import Add from "../operations/airthmetic/add";
 
 const TEXT_TO_OPERATIONS: Map<string, (extension: string) => Operation> = new Map([
     ["add", (extension) => new Add(extension)],
+    ["addu", (extension) => new Add(extension)]
 ]);
 
 const asmRegex = /^(?:(?<label>[A-Za-z][A-Za-z0-9]*):)?\s*(?<operation>[A-Za-z.]+)\s*(?<operands>[A-Za-z0-9, ]*)?\s*(?:;(?<comment>.*))?$/;

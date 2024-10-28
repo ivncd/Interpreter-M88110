@@ -3,7 +3,7 @@ import { Operand } from "../../models/Operand";
 
 export default class Add implements Operation{
     static EXTENSIONS : { [extension : string] : (context : Add) => number} =  {
-        "" : (context) => context.signed(),
+        "" : (context) => context.unsigned(),
     };
 
     extension : string;
@@ -13,15 +13,21 @@ export default class Add implements Operation{
         this.extension = extension;
     }
 
-    public signed() : number {
+    private checkOperands(operands : Operand[]) : boolean{
+        return true;
+    }
+
+    public unsigned() : number {
         let value = this.operands[1].get() + this.operands[2].get();
 
         return value
     }
 
     public execute(operands : Operand[]) : void{
-        this.operands = operands;
-        const func = Add.EXTENSIONS[this.extension];
-        operands[0].set(func(this));
+        if(this.checkOperands(operands)){
+            this.operands = operands;
+            const func = Add.EXTENSIONS[this.extension];
+            operands[0].set(func(this));
+        }
     }
 }
