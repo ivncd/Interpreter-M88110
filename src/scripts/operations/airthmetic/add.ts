@@ -20,7 +20,7 @@ export default class Add implements Operation{
                
         if(!(operands[0] instanceof Register &&
             operands[1] instanceof Register &&
-            (operands[2] instanceof DecimalValue || operands[2] instanceof HexadecimalValue))
+            (operands[2] instanceof DecimalValue || operands[2] instanceof HexadecimalValue || operands[2] instanceof Register))
         )
             throw new Error('Invalid operands for operation add')
             
@@ -29,7 +29,6 @@ export default class Add implements Operation{
 
     public signed() : number {
         let value = this.operands[1].get() + this.operands[2].get(true);
-        console.log(value)
 
         return value
     }
