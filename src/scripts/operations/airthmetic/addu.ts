@@ -1,6 +1,7 @@
 import Operation from "../Operation";
-import { Operand } from "../../models/Operand";
+import { Operand, Register, DecimalValue, HexadecimalValue } from "../../models/Operand";
 
+const OPERANDS_NUM = 3
 export default class Add implements Operation{
     static EXTENSIONS : { [extension : string] : (context : Add) => number} =  {
         "" : (context) => context.unsigned(),
@@ -14,11 +15,18 @@ export default class Add implements Operation{
     }
 
     private checkOperands(operands : Operand[]) : boolean{
-        if(operands)
-            return true;
-        else
-            return false;
+        if(operands.length !== OPERANDS_NUM)
+            throw new Error('Operands number is insufficient for this operation')
+               
+        if(!(operands[0] instanceof Register &&
+            operands[1] instanceof Register &&
+            (operands[2] instanceof DecimalValue || operands[2] instanceof HexadecimalValue))
+        )
+            throw new Error('Invalid operands for operation add')
+            
+        return true
     }
+
 
     public unsigned() : number {
         let value = this.operands[1].get() + this.operands[2].get();
