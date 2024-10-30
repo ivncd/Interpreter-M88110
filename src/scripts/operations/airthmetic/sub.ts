@@ -2,8 +2,8 @@ import Operation from "../Operation";
 import { Operand, Register, DecimalValue, HexadecimalValue } from "../../models/Operand";
 
 const OPERANDS_NUM = 3
-export default class Add implements Operation{
-    static EXTENSIONS : { [extension : string] : (context : Add) => number} =  {
+export default class Sub implements Operation{
+    static EXTENSIONS : { [extension : string] : (context : Sub) => number} =  {
         "" : (context) => context.signed(),
     };
 
@@ -28,7 +28,7 @@ export default class Add implements Operation{
     }
 
     public signed() : number {
-        let value = this.operands[1].get() + this.operands[2].get();
+        let value = this.operands[1].get() - this.operands[2].get();
 
         return value
     }
@@ -36,7 +36,7 @@ export default class Add implements Operation{
     public execute(operands : Operand[]) : void{
         if(this.checkOperands(operands)){
             this.operands = operands;
-            const func = Add.EXTENSIONS[this.extension];
+            const func = Sub.EXTENSIONS[this.extension];
             operands[0].set(func(this));
         }
     }

@@ -1,11 +1,18 @@
 import { Operand, Register, DecimalValue, HexadecimalValue} from "../models/Operand";
 
 import Operation from "../operations/Operation";
-import Add from "../operations/airthmetic/add";
 
-const TEXT_TO_OPERATIONS: Map<string, (extension: string) => Operation> = new Map([
+import Add from "../operations/airthmetic/add";
+import Addu from "../operations/airthmetic/addu";
+
+import Sub from "../operations/airthmetic/sub";
+import Subu from "../operations/airthmetic/subu";
+
+const TEXT_TO_OPERATIONS: Map<string, (extension: string) => Operation> = new Map<string, (extension: string) => Operation>([
     ["add", (extension) => new Add(extension)],
-    ["addu", (extension) => new Add(extension)]
+    ["addu", (extension) => new Addu(extension)],
+    ["sub", (extension) => new Sub(extension)],
+    ["subu", (extension) => new Subu(extension)]
 ]);
 
 
