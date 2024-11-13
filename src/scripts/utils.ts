@@ -2,7 +2,7 @@ export function to32BitHex(num: number): string {
     let adjustedNum = num >>> 0;
     let hexString = adjustedNum.toString(16);
 
-    return '0x' + hexString.padStart(8, '0');
+    return '0x' + hexString.padStart(8, '0').toUpperCase();
 }
 
 export function hexToDecimal(hexNumber : string, signed = true) {
