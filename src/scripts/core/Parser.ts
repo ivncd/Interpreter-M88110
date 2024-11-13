@@ -2,17 +2,18 @@ import { Operand, Register, DecimalValue, HexadecimalValue} from "../models/Oper
 
 import Operation from "../operations/Operation";
 
-import Add from "../operations/airthmetic/add";
-import Addu from "../operations/airthmetic/addu";
-
-import Sub from "../operations/airthmetic/sub";
-import Subu from "../operations/airthmetic/subu";
+// Arithmetic operations
+import { Add, Addu, Sub, Subu, Muls, Mulu, Divs, Divu } from "../operations/airthmetic";
 
 const TEXT_TO_OPERATIONS: Map<string, (extension: string) => Operation> = new Map<string, (extension: string) => Operation>([
     ["add", (extension) => new Add(extension)],
     ["addu", (extension) => new Addu(extension)],
     ["sub", (extension) => new Sub(extension)],
-    ["subu", (extension) => new Subu(extension)]
+    ["subu", (extension) => new Subu(extension)],
+    ["muls", (extension) => new Muls(extension)],
+    ["mulu", (extension) => new Mulu(extension)],
+    ["divs", (extension) => new Divs(extension)],
+    ["divu", (extension) => new Divu(extension)]
 ]);
 
 
