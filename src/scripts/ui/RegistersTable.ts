@@ -13,11 +13,13 @@ export default class RegistersTable {
             const registerCell : HTMLElement = document.createElement("td");
             let  textCell = document.createTextNode(registerId);
             registerCell.appendChild(textCell);
+            registerCell.classList.add('name')
             cell.appendChild(registerCell);
 
             const valueCell : HTMLElement = document.createElement("td");
             textCell = document.createTextNode(value == null ? "" : to32BitHex(value));
             valueCell.appendChild(textCell);
+            valueCell.classList.add("value")
             cell.appendChild(valueCell);
 
             table.appendChild(cell);
