@@ -5,6 +5,7 @@ import Interpreter from './core/Interpreter';
 
 import Registers from './core/Registers';
 import RegistersTable from './ui/RegistersTable';
+import StatusTable from './ui/StatusTable';
 
 
 aceBuilds.config.set('basePath', '/ace');
@@ -17,9 +18,19 @@ function setupRegisters(div : HTMLElement) : void{
     div.appendChild(RegistersTable.getTable());
 }
 
+function setupStatus(div : HTMLElement) : void{
+    StatusTable.build();
+    div.appendChild(StatusTable.getTable());
+}
+
 
 const divRegisters : HTMLElement = document.getElementById("registers")!;
 setupRegisters(divRegisters);
+
+const divStatus : HTMLElement = document.getElementById("status")!;
+setupStatus(divStatus);
+
+
 
 // first Test
 Registers.set("r1", 1)
