@@ -1,7 +1,14 @@
 import { Operand } from "../models/Operand";
 
-export default interface Operation{
+export default abstract class Operation {
     extension : string;
-    operands : Operand[];
-    execute(operands : Operand[]) : void;
+    constructor(extension : string){
+        this.extension = extension;
+    }
+
+    static checkOperands(operands : Operand[]) : boolean{
+        return operands.length == -1;
+    }
+
+    public abstract execute(operands : Operand[]) : void;
 }

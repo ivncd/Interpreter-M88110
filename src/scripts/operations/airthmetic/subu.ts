@@ -2,19 +2,16 @@ import Operation from "../Operation";
 import { Operand, Register, DecimalValue, HexadecimalValue } from "../../models/Operand";
 
 const OPERANDS_NUM = 3
-export default class Subu implements Operation{
-    static EXTENSIONS : { [extension : string] : (context : Subu) => number} =  {
-        "" : (context) => context.unsigned(),
+export default class Subu extends Operation{
+    static EXTENSIONS : { [extension : string] : (operands : Operand[]) => number} =  {
+        "" : (operands) => Subu.default(operands),
     };
 
-    extension : string;
-    operands !: Operand[];
-
-    constructor(extension : string) {
-        this.extension = extension;
+    constructor(extension : string){
+        super(extension);
     }
 
-    private checkOperands(operands : Operand[]) : boolean{
+    public static checkOperands(operands : Operand[]) : boolean{
         if(operands.length !== OPERANDS_NUM)
             throw new Error('Operands number is insufficient for this operation')
                
@@ -28,17 +25,14 @@ export default class Subu implements Operation{
     }
 
 
-    public unsigned() : number {
-        let value = this.operands[1].get() + this.operands[2].get(false);
+    public static default(operands : Operand[]) : number {
+        let value = operands[1].get() - operands[2].get(false);
 
         return value
     }
 
     public execute(operands : Operand[]) : void{
-        if(this.checkOperands(operands)){
-            this.operands = operands;
-            const func = Subu.EXTENSIONS[this.extension];
-            operands[0].set(func(this));
-        }
+        const func = Subu.EXTENSIONS[this.extension];
+        operands[0].set(func(operands));
     }
 }

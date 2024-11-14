@@ -2,41 +2,35 @@ import Operation from "../Operation";
 import { Operand, Register} from "../../models/Operand";
 
 const OPERANDS_NUM = 3
-export default class Muls implements Operation{
-    static EXTENSIONS : { [extension : string] : (context : Muls) => number} =  {
-        "" : (context) => context.signed(),
+export default class Muls extends Operation{
+    static EXTENSIONS : { [extension : string] : (operands : Operand[]) => number} =  {
+        "" : (operands) => Muls.default(operands),
     };
 
-    extension : string;
-    operands !: Operand[];
-    constructor(extension : string) {
-        this.extension = extension;
+    constructor(extension : string){
+        super(extension);
     }
 
-    private checkOperands(operands : Operand[]) : boolean{
+    public static checkOperands(operands : Operand[]) : boolean{
         if(operands.length !== OPERANDS_NUM)
             throw new Error('Operands number is insufficient for this operation')
                
-        if(!(operands[0] instanceof Register &&
+        if(operands[0] instanceof Register &&
             operands[1] instanceof Register &&
-            operands[2] instanceof Register)
-          )
-            throw new Error('Invalid operands for operation add')
+            operands[2] instanceof Register
+        )
+            return true;
             
-        return true
+        return false;
     }
 
-    public signed() : number {
-        let value = this.operands[1].get() * this.operands[2].get();
-
+    public static default(operands : Operand[]) : number {
+        let value = operands[1].get() * operands[2].get();
         return value
     }
 
     public execute(operands : Operand[]) : void{
-        if(this.checkOperands(operands)){
-            this.operands = operands;
-            const func = Muls.EXTENSIONS[this.extension];
-            operands[0].set(func(this));
-        }
+        const func = Muls.EXTENSIONS[this.extension];
+        operands[0].set(func(operands));
     }
 }

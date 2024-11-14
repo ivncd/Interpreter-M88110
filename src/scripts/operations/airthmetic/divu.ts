@@ -2,35 +2,33 @@ import Operation from "../Operation";
 import { Operand, Register, DecimalValue, HexadecimalValue } from "../../models/Operand";
 
 const OPERANDS_NUM = 3
-export default class Divu implements Operation{
-    static EXTENSIONS : { [extension : string] : (context : Divu) => number} =  {
-        "" : (context) => context.signed(),
+export default class Divu extends Operation{
+    static EXTENSIONS : { [extension : string] : (operands : Operand[]) => number} =  {
+        "" : (operands) => Divu.default(operands),
     };
 
-    extension : string;
-    operands !: Operand[];
-    constructor(extension : string) {
-        this.extension = extension;
+    constructor(extension : string){
+        super(extension);
     }
 
-    private checkOperands(operands : Operand[]) : boolean{
+    public static checkOperands(operands : Operand[]) : boolean{
         if(operands.length !== OPERANDS_NUM)
             throw new Error('Operands number is insufficient for this operation')
                
-        if(!(operands[0] instanceof Register &&
+        if(operands[0] instanceof Register &&
             operands[1] instanceof Register &&
-            (operands[2] instanceof DecimalValue || operands[2] instanceof HexadecimalValue || operands[2] instanceof Register))
+            (operands[2] instanceof DecimalValue || operands[2] instanceof HexadecimalValue || operands[2] instanceof Register)
         )
-            throw new Error('Invalid operands for operation add')
+            return true;
             
-        return true
+        return false;
     }
 
-    public signed() : number {
-        let secondValue = this.operands[2].get(false)
+    public static default(operands : Operand[]) : number {
+        let secondValue = operands[2].get(false)
         let value = 0;
         if(secondValue != 0){
-            value = this.operands[1].get() / secondValue;
+            value = operands[1].get() / secondValue;
         } else {
             throw new Error("No se puede dividir entre 0")
         }
@@ -39,10 +37,7 @@ export default class Divu implements Operation{
     }
 
     public execute(operands : Operand[]) : void{
-        if(this.checkOperands(operands)){
-            this.operands = operands;
-            const func = Divu.EXTENSIONS[this.extension];
-            operands[0].set(func(this));
-        }
+        const func = Divu.EXTENSIONS[this.extension];
+        operands[0].set(func(operands));
     }
 }
