@@ -5,17 +5,17 @@ import Operation from "../operations/Operation";
 // Arithmetic operations
 import { Add, Addu, Sub, Subu, Muls, Mulu, Divs, Divu } from "../operations/airthmetic";
 
-const TEXT_TO_OPERATIONS: Map<string, (extension: string) => Operation> = new Map<string, (extension: string) => Operation>([
-    ["add", (extension) => new Add(extension)],
-    ["addu", (extension) => new Addu(extension)],
-    ["sub", (extension) => new Sub(extension)],
-    ["subu", (extension) => new Subu(extension)],
-    ["muls", (extension) => new Muls(extension)],
-    ["mulu", (extension) => new Mulu(extension)],
-    ["divs", (extension) => new Divs(extension)],
-    ["divu", (extension) => new Divu(extension)]
+type OperationConstructor = { new(extension: string): Operation };
+const TEXT_TO_OPERATIONS = new Map<string, typeof Operation | OperationConstructor>([
+  ["add", Add],
+  ["addu", Addu],
+  ["sub", Sub],
+  ["subu", Subu],
+  ["muls", Muls],
+  ["mulu", Mulu],
+  ["divs", Divs],
+  ["divu", Divu]
 ]);
-
 
 const asmRegex = /^(?:(?<label>[A-Za-z][A-Za-z0-9]*):)?\s*(?<operation>[A-Za-z.]+)\s*(?<operands>[A-Za-z0-9, -]*)?\s*(?:;(?<comment>.*))?$/;
 const registerRegex = /r([0-9]|[12][0-9]|3[01])/;
@@ -55,7 +55,7 @@ export default class Parser{
         return operands;
     }
 
-    public static parseOperation(operationText : string) : Operation {
+    public static parseOperation(operationText : string) : [typeof Operation, Operation]{
         const [operationName, ...rest] = operationText.split('.');
         const extension = rest.join('.');
 
@@ -63,6 +63,6 @@ export default class Parser{
         if(!createOperation)
             throw new Error(`The operation ${operationName} does not exist`);
 
-        return createOperation(extension);
+        return [createOperation as typeof Operation , new (createOperation as OperationConstructor)(extension)];
     }
 }

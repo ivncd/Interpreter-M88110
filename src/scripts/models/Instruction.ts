@@ -12,16 +12,22 @@ export default class Instruction{
     constructor(instructionText : string){
         const parsedInstruction = Parser.parseInstruction(instructionText)!;
         this.label = parsedInstruction.label;
+        const [operationType, operation] = this.obtainOperation(parsedInstruction.operation);
         this.operands = this.obtainOperands(parsedInstruction.operands);
-        this.operation = this.obtainOperation(parsedInstruction.operation);
         this.comment = parsedInstruction.comment;
+
+        if(!operationType.checkOperands(this.operands)){
+            throw new Error("Operands doesn't match the ones used by the operation")
+        }
+
+        this.operation = operation;
     }
 
     private obtainOperands(operandsText : string) : Operand[]{
         return Parser.parseOperands(operandsText);
     }
 
-    private obtainOperation(operationText : string) : Operation {
+    private obtainOperation(operationText : string) : [typeof Operation, Operation]{
         return Parser.parseOperation(operationText);
     }
 
