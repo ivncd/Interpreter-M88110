@@ -3,7 +3,7 @@ import { Operand, Register, DecimalValue, HexadecimalValue} from "../models/Oper
 import Operation from "../operations/Operation";
 
 // Arithmetic operations
-import { Add, Addu, Sub, Subu, Muls, Mulu, Divs, Divu } from "../operations/airthmetic";
+import { Add, Addu, Sub, Subu, Muls, Mulu, Divs, Divu, Cmp } from "../operations/airthmetic";
 import { And, Xor, Mask, Or } from "../operations/logic";
 
 type OperationConstructor = { new(extension: string): Operation };
@@ -17,6 +17,7 @@ const TEXT_TO_OPERATIONS = new Map<string, typeof Operation | OperationConstruct
   ["mulu", Mulu],
   ["divs", Divs],
   ["divu", Divu],
+  ["cmp", Cmp],
   // Logic Operations
   ["and", And],
   ["xor", Xor],

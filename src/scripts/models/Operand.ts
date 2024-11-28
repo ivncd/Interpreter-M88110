@@ -14,8 +14,11 @@ export class Register implements Operand{
         this.registerId = registerId;
     }
 
-    public get() : number {
-        return Registers.get(this.registerId);
+    public get(signed : boolean = true) : number {
+        if(signed)
+            return Registers.get(this.registerId);
+        else
+            return Registers.get(this.registerId) >>> 0;
     }
 
     public set(value : number) : void {
@@ -30,8 +33,11 @@ export class DecimalValue implements Operand{
         this.value = value;
     }
 
-    public get() : number {
-        return this.value;
+    public get(signed : boolean = true) : number {
+        if(signed)
+            return this.value;
+        else
+            return this.value >>> 0;
     }
 
     public set(value : number) : void {

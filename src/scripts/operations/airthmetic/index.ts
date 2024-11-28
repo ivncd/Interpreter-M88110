@@ -6,3 +6,4 @@ export { default as Muls } from "./muls";
 export { default as Mulu } from "./mulu";
 export { default as Divs } from "./divs";
 export { default as Divu } from "./divu";
+export { default as Cmp} from "./cmp";
