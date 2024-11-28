@@ -28,7 +28,7 @@ export default class Divu extends Operation{
         let secondValue = operands[2].get(false)
         let value = 0;
         if(secondValue != 0){
-            value = operands[1].get() / secondValue;
+            value = operands[1].get(false) / secondValue;
         } else {
             throw new Error("No se puede dividir entre 0")
         }

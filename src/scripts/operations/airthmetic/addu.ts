@@ -25,7 +25,7 @@ export default class Addu extends Operation{
     }
 
     public static default(operands : Operand[]) : number {
-        let value = operands[1].get() + operands[2].get(false);
+        let value = operands[1].get(false) + operands[2].get(false);
 
         return value
     }
