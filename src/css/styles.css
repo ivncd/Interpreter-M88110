@@ -143,3 +143,11 @@ table tr:last-child td:first-child {
 table tr:last-child td:last-child {
     border-bottom-right-radius: 4px;
 }
+
+footer{
+    padding: 10px;
+}
+
+footer li{
+    margin-left: 20px;
+}
