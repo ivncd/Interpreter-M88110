@@ -4,9 +4,11 @@ import Operation from "../operations/Operation";
 
 // Arithmetic operations
 import { Add, Addu, Sub, Subu, Muls, Mulu, Divs, Divu } from "../operations/airthmetic";
+import { And, Xor, Mask, Or } from "../operations/logic";
 
 type OperationConstructor = { new(extension: string): Operation };
 const TEXT_TO_OPERATIONS = new Map<string, typeof Operation | OperationConstructor>([
+  // Arithmetic Operations
   ["add", Add],
   ["addu", Addu],
   ["sub", Sub],
@@ -14,7 +16,12 @@ const TEXT_TO_OPERATIONS = new Map<string, typeof Operation | OperationConstruct
   ["muls", Muls],
   ["mulu", Mulu],
   ["divs", Divs],
-  ["divu", Divu]
+  ["divu", Divu],
+  // Logic Operations
+  ["and", And],
+  ["xor", Xor],
+  ["mask", Mask],
+  ["or", Or]
 ]);
 
 const asmRegex = /^(?:(?<label>[A-Za-z][A-Za-z0-9]*):)?\s*(?<operation>[A-Za-z.]+)\s*(?<operands>[A-Za-z0-9, -]*)?\s*(?:;(?<comment>.*))?$/;
