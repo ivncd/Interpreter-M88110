@@ -6,7 +6,7 @@ import Interpreter from './core/Interpreter';
 import Registers from './core/Registers';
 import RegistersTable from './ui/RegistersTable';
 import StatusTable from './ui/StatusTable';
-
+import MemoryTable from './ui/MemoryTable';
 
 aceBuilds.config.set('basePath', '/ace');
 const editor = aceBuilds.edit("editor");
@@ -23,6 +23,12 @@ function setupStatus(div : HTMLElement) : void{
     div.appendChild(StatusTable.getTable());
 }
 
+function setupMemory(div : HTMLElement) : void{
+    MemoryTable.build();
+    div.appendChild(MemoryTable.getTable());
+}
+
+
 
 const divRegisters : HTMLElement = document.getElementById("registers")!;
 setupRegisters(divRegisters);
@@ -30,9 +36,12 @@ setupRegisters(divRegisters);
 const divStatus : HTMLElement = document.getElementById("status")!;
 setupStatus(divStatus);
 
-
+const divMemory : HTMLElement = document.getElementById("memory")!;
+setupMemory(divMemory);
 
 // first Test
+console.log(Registers.map)
+console.log(RegistersTable.table)
 Registers.set("r1", 1)
 Registers.set("r2", 2)
 Registers.set("r3", 3)
