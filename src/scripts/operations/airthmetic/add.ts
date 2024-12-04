@@ -1,5 +1,8 @@
 import Operation from "../Operation";
 import { Operand, Register, DecimalValue, HexadecimalValue } from "../../models/Operand";
+import { isValidSigned } from "../../utils";
+import { ExecutionError } from "../../error";
+
 
 const OPERANDS_NUM = 3
 export default class Add extends Operation{
@@ -26,6 +29,9 @@ export default class Add extends Operation{
 
     public static default(operands : Operand[]) : number {
         let value = operands[1].get() + operands[2].get();
+
+        if(!isValidSigned(value))
+            throw new ExecutionError("Exceeded signed 32 bit int range", "Overflow");
 
         return value
     }

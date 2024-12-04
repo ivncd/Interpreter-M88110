@@ -1,5 +1,8 @@
 import Operation from "../Operation";
 import { Operand, Register, DecimalValue, HexadecimalValue } from "../../models/Operand";
+import { isValidSigned } from "../../utils";
+import { ExecutionError } from "../../error";
+
 
 const OPERANDS_NUM = 3
 export default class Divs extends Operation{
@@ -30,8 +33,11 @@ export default class Divs extends Operation{
         if(secondValue != 0){
             value = operands[1].get() / secondValue;
         } else {
-            throw new Error("No se puede dividir entre 0")
+            throw new ExecutionError("Can't divide by 0", "Zero")
         }
+
+        if(!isValidSigned(value))
+            throw new ExecutionError("Exceeded signed 32 bit int range", "Overflow");
 
         return value
     }

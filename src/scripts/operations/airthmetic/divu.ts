@@ -1,5 +1,6 @@
 import Operation from "../Operation";
 import { Operand, Register, DecimalValue, HexadecimalValue } from "../../models/Operand";
+import { ExecutionError } from "../../error";
 
 const OPERANDS_NUM = 3
 export default class Divu extends Operation{
@@ -30,7 +31,7 @@ export default class Divu extends Operation{
         if(secondValue != 0){
             value = operands[1].get(false) / secondValue;
         } else {
-            throw new Error("No se puede dividir entre 0")
+            throw new ExecutionError("Can't divide by 0", "Zero")
         }
 
         return value

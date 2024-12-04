@@ -9,7 +9,11 @@ export default class Interpreter{
 
     public executeAll() : void {
         for(let lineNumber = 1; lineNumber <= this.instructions.length; lineNumber++){
-            this.executeLine(lineNumber);
+            try {
+                this.executeLine(lineNumber);
+            } catch {
+                console.log("AAA")
+            }
         }
     }
 

@@ -1,3 +1,5 @@
+import { MAX_SIGNED_32, MIN_SIGNED_32, MAX_UNSIGNED_32, MIN_UNSIGNED_32 } from "./consts";
+
 export function to32BitHex(num: number): string {
     let adjustedNum = num >>> 0;
     let hexString = adjustedNum.toString(16);
@@ -17,4 +19,12 @@ export function hexToDecimal(hexNumber : string, signed = true) {
     }
 
     return num;
+}
+
+export function isValidUnsigned(value : number) : boolean{
+    return (value <= MAX_UNSIGNED_32 && value >= MIN_UNSIGNED_32);
+}
+
+export function isValidSigned(value : number) : boolean{
+    return (value <= MAX_SIGNED_32 && value >= MIN_SIGNED_32);
 }

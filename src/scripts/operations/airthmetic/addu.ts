@@ -1,5 +1,6 @@
 import Operation from "../Operation";
 import { Operand, Register, DecimalValue, HexadecimalValue } from "../../models/Operand";
+import { MAX_UNSIGNED_32 } from "../../consts";
 
 const OPERANDS_NUM = 3
 export default class Addu extends Operation{
@@ -26,6 +27,9 @@ export default class Addu extends Operation{
 
     public static default(operands : Operand[]) : number {
         let value = operands[1].get(false) + operands[2].get(false);
+
+        if(value > MAX_UNSIGNED_32)
+            value = value - (MAX_UNSIGNED_32 + 1); // +1 for next byte
 
         return value
     }
