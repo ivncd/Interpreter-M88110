@@ -47,7 +47,7 @@ Registers.set("r2", 2)
 Registers.set("r3", 3)
 Registers.set("r4", 4294967000);
 Registers.set('r5', 500);
-editor.setValue("add r5, r2, r3\nadd r6, r5, r1\nsub r7, r1, 2");
+editor.setValue("add r10, r4, 294\nadd r11, r10, -1\naddu r12, r11, 2");
 
 function main(){
     let code = editor.getValue();

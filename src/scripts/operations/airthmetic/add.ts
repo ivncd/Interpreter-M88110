@@ -28,10 +28,11 @@ export default class Add extends Operation{
     }
 
     public static default(operands : Operand[]) : number {
-        let value = operands[1].get() + operands[2].get();
+        let value = operands[1].get(true) + operands[2].get(true);
 
+        //TODO: check if error stop execution or not
         if(!isValidSigned(value))
-            throw new ExecutionError("Exceeded signed 32 bit int range", "Overflow");
+            throw new ExecutionError("Exceeded 32 bit int range", "Overflow");
 
         return value
     }

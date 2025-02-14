@@ -1,5 +1,6 @@
 import Registers from "../core/Registers";
 
+import { MAX_SIGNED_32, MAX_UNSIGNED_32 } from "../consts";
 import { hexToDecimal } from "../utils";
 
 export interface Operand{
@@ -15,10 +16,11 @@ export class Register implements Operand{
     }
 
     public get(signed : boolean = true) : number {
+        let value = Registers.get(this.registerId);
         if(signed)
-            return Registers.get(this.registerId);
+            return value > MAX_SIGNED_32 ? value - MAX_UNSIGNED_32 : value;
         else
-            return Registers.get(this.registerId) >>> 0;
+            return value < 0 ? value + 1 + MAX_UNSIGNED_32 : value;
     }
 
     public set(value : number) : void {
@@ -35,9 +37,9 @@ export class DecimalValue implements Operand{
 
     public get(signed : boolean = true) : number {
         if(signed)
-            return this.value;
+            return this.value > MAX_SIGNED_32 ? this.value - MAX_UNSIGNED_32 : this.value;
         else
-            return this.value >>> 0;
+            return this.value < 0 ? this.value + 1 + MAX_UNSIGNED_32 : this.value;
     }
 
     public set(value : number) : void {
@@ -53,6 +55,7 @@ export class HexadecimalValue implements Operand{
     }
 
     public get(signed : boolean = true) : number{
+        console.log(this.value, signed)
         return hexToDecimal(this.value, signed);
     }
 

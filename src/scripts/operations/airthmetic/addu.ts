@@ -28,8 +28,10 @@ export default class Addu extends Operation{
     public static default(operands : Operand[]) : number {
         let value = operands[1].get(false) + operands[2].get(false);
 
-        if(value > MAX_UNSIGNED_32)
-            value = value - (MAX_UNSIGNED_32 + 1); // +1 for next byte
+        // TODO: Warning when doing this and check if status change with this
+        if(value > MAX_UNSIGNED_32){
+            value = value - MAX_UNSIGNED_32 - 1;
+        }
 
         return value
     }

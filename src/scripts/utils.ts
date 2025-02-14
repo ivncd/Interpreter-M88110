@@ -8,13 +8,15 @@ export function to32BitHex(num: number): string {
 }
 
 export function hexToDecimal(hexNumber : string, signed = true) {
+    hexNumber = hexNumber.includes('0x') ? hexNumber.substring(2) : hexNumber;
     const bitLength = hexNumber.length * 4;
-    const num = parseInt(hexNumber, 16);
-
+    let num = parseInt(hexNumber, 16);
     if (signed) {
-        const maxPositiveValue = 1 << (bitLength - 1);
-        if (num >= maxPositiveValue) {
-            return num - (1 << bitLength);
+        const maxUnsignedValue = Math.pow(2, bitLength) - 1;
+        const maxSignedValue = Math.pow(2, bitLength - 1) - 1;
+        if(num > maxSignedValue){
+            num -= maxUnsignedValue + 1;
+            console.log(hexNumber, num)
         }
     }
 
