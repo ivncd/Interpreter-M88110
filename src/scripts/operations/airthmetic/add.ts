@@ -1,13 +1,17 @@
 import Operation from "../Operation";
 import { Operand, Register, DecimalValue, HexadecimalValue } from "../../models/Operand";
 import { isValidSigned } from "../../utils";
-import { ExecutionError } from "../../error";
+import Status from "../../core/Status";
+import { MAX_SIGNED_32, MIN_SIGNED_32 } from "../../consts";
 
 
 const OPERANDS_NUM = 3
 export default class Add extends Operation{
     static EXTENSIONS : { [extension : string] : (operands : Operand[]) => number} =  {
         "" : (operands) => Add.default(operands),
+        "co" : (operands) => Add.default(operands, true, false),
+        "ci" : (operands) => Add.default(operands, false, true),
+        "cio" : (operands) => Add.default(operands, true, true),
     };
 
     constructor(extension : string){
@@ -27,12 +31,31 @@ export default class Add extends Operation{
         return false;
     }
 
-    public static default(operands : Operand[]) : number {
+    public static default(operands : Operand[], updateCarry : boolean = false, useCarry : boolean = false) : number {
         let value = operands[1].get(true) + operands[2].get(true);
 
-        //TODO: check if error stop execution or not
-        if(!isValidSigned(value))
-            throw new ExecutionError("Exceeded 32 bit int range", "Overflow");
+        if(useCarry)
+            value += Status.get("Carry");
+
+        console.log(value)
+        if(!isValidSigned(value)){
+            if(value < MIN_SIGNED_32){
+                value = value + MAX_SIGNED_32 + 1;
+            } else if(value > MAX_SIGNED_32){
+                value = value + MIN_SIGNED_32 - 1;
+            }
+
+            Status.set("Overflow", 1)    
+            if(updateCarry)
+                Status.set("Carry", 1);
+        } else {
+            Status.set("Overflow", 0);
+            if(updateCarry)
+                Status.set("Carry", 0);
+        }
+
+        //TODO: Move it from here to interpreter
+        Status.set("Zero", value == 0 ? 1 : 0);
 
         return value
     }

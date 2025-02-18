@@ -1,11 +1,15 @@
 import Operation from "../Operation";
 import { Operand, Register, DecimalValue, HexadecimalValue } from "../../models/Operand";
 import { MAX_UNSIGNED_32 } from "../../consts";
+import Status from "../../core/Status";
 
 const OPERANDS_NUM = 3
 export default class Addu extends Operation{
     static EXTENSIONS : { [extension : string] : (operands : Operand[]) => number} =  {
         "" : (operands) => Addu.default(operands),
+        "co" : (operands) => Addu.default(operands, true, false),
+        "ci" : (operands) => Addu.default(operands, false, true),
+        "cio" : (operands) => Addu.default(operands, true, true),
     };
 
     constructor(extension : string){
@@ -25,13 +29,27 @@ export default class Addu extends Operation{
         return false;
     }
 
-    public static default(operands : Operand[]) : number {
+    public static default(operands : Operand[], updateCarry : boolean = false, useCarry : boolean = false) : number {
         let value = operands[1].get(false) + operands[2].get(false);
 
-        // TODO: Warning when doing this and check if status change with this
+        if(useCarry)
+            value += Status.get("Carry");
+
         if(value > MAX_UNSIGNED_32){
             value = value - MAX_UNSIGNED_32 - 1;
+            Status.set("Overflow", 1)    
+            
+            if(updateCarry)
+                Status.set("Carry", 1);
+
+        } else {
+            Status.set("Overflow", 0);
+            if(updateCarry)
+                Status.set("Carry", 0);
         }
+
+        // TODO: Move it from here to interpreter 
+        Status.set("Zero", value == 0 ? 1 : 0);
 
         return value
     }
