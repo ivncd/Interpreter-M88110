@@ -45,8 +45,12 @@ console.log(RegistersTable.table)
 Registers.set("r1", 1)
 Registers.set("r2", 2)
 Registers.set("r3", 3)
-Registers.set("r4", 4294967000);
-Registers.set('r5', 500);
+Registers.set("r4", 4294967000)
+Registers.set("r5", 500)
+Registers.set("r6", Math.pow(2, 31) - 1)
+Registers.set("r7", Math.pow(2, 32) - 1)
+
+
 editor.setValue("add r10, r4, 294\nadd r11, r10, -1\naddu r12, r11, 2");
 
 function main(){

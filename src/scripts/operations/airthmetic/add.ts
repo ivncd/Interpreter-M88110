@@ -2,7 +2,6 @@ import Operation from "../Operation";
 import { Operand, Register, DecimalValue, HexadecimalValue } from "../../models/Operand";
 import { isValidSigned } from "../../utils";
 import Status from "../../core/Status";
-import { MAX_SIGNED_32, MIN_SIGNED_32 } from "../../consts";
 
 
 const OPERANDS_NUM = 3
@@ -37,14 +36,7 @@ export default class Add extends Operation{
         if(useCarry)
             value += Status.get("Carry");
 
-        console.log(value)
         if(!isValidSigned(value)){
-            if(value < MIN_SIGNED_32){
-                value = value + MAX_SIGNED_32 + 1;
-            } else if(value > MAX_SIGNED_32){
-                value = value + MIN_SIGNED_32 - 1;
-            }
-
             Status.set("Overflow", 1)    
             if(updateCarry)
                 Status.set("Carry", 1);

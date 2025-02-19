@@ -1,6 +1,6 @@
 import Operation from "../Operation";
 import { Operand, Register, DecimalValue, HexadecimalValue } from "../../models/Operand";
-import { MAX_UNSIGNED_32 } from "../../consts";
+import { MAX_UNSIGNED_32} from "../../consts";
 import Status from "../../core/Status";
 
 const OPERANDS_NUM = 3
@@ -37,13 +37,10 @@ export default class Addu extends Operation{
 
         if(value > MAX_UNSIGNED_32){
             value = value - MAX_UNSIGNED_32 - 1;
-            Status.set("Overflow", 1)    
-            
             if(updateCarry)
                 Status.set("Carry", 1);
 
         } else {
-            Status.set("Overflow", 0);
             if(updateCarry)
                 Status.set("Carry", 0);
         }
